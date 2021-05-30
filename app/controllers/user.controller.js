@@ -12,7 +12,6 @@ function encodeBase64(email) {
   return encoded;
 }
 
-// Create and Save a new User
 exports.create = (req, res) => {
   if (
     !req.body.email ||
@@ -26,13 +25,18 @@ exports.create = (req, res) => {
     });
     return;
   }
-  db.users.count({ where: { email: req.body.email } }).then((count) => {
+  const base64Email = encodeBase64(req.body.email);
+  User.count({ where: { email: base64Email } }).then((count) => {
+    console.log(count)
     if (count != 0) {
       res.status(400).send({
         message: "email already exists",
         code: "EMAILNOTUNIQUE",
       });
     }
+  })
+  .catch((err) => {
+    console.log(err)
   });
   if (req.body.password.length < 6) {
     res.status(400).send({
@@ -47,7 +51,6 @@ exports.create = (req, res) => {
     });
   }
 
-  const base64Email = encodeBase64(req.body.email);
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = {
       first_name: req.body.first_name,
@@ -101,7 +104,8 @@ exports.login = (req, res) => {
           })
           res.status(200).send({
             user: user,
-            token: jwttoken
+            token: jwttoken,
+            userId: user.id
           });
         })
         .catch((error) => {
@@ -112,7 +116,6 @@ exports.login = (req, res) => {
 
 }
 
-// Find a single Tutorial with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -128,7 +131,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -165,7 +167,6 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 

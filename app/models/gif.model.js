@@ -12,7 +12,5 @@ module.exports = (sequelize, Sequelize) => {
     });
   
     return Gif;
-
-   
   
   };

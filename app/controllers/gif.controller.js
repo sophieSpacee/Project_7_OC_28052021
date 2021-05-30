@@ -1,5 +1,6 @@
 const db = require("../models");
 const Gif = db.gifs;
+const Comment = db.comments;
 const Op = db.Sequelize.Op;
 const fs = require('fs')
 
@@ -25,11 +26,13 @@ exports.create = (req, res) => {
     });
     return;
   }
+
   const gif = {
     title: req.body.title,
     image: `${req.protocol}://${req.get("host")}/app/images/${
       req.file.filename
     }`,
+    UserId: req.body.userId
   };
 
   Gif.create(gif)
@@ -47,6 +50,9 @@ exports.findAll= (req, res) => {
   let page = parseInt(req.query.page) || 0;
   let limit = 2;
   Gif.findAndCountAll({
+    include: [{
+      model: Comment, as: 'comments',
+    }],
     limit: limit,
     order: [["updatedAt", "DESC"]],
     offset: page * limit
@@ -84,7 +90,7 @@ exports.delete = (req, res) => {
               });
             } else {
               res.send({
-                message: `Cannot delete Gif with id=${id}. Maybe Tutorial was not found!`,
+                message: `Cannot delete Gif with id=${id}.`,
               });
             }
           })

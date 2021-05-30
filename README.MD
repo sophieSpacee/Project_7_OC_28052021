@@ -50,3 +50,59 @@ PUT ```/api/users/:id```
 | Error Code  |      Description  |    
 |----------|:-------------:|
 | UPDATEFAILED |update failed| 
+
+
+## Create Gif
+
+POST ```/api/gifs```
+
+| Parameters   | Type |     Conditions  |    
+|----------|:-------------:| ----: |
+| title | body | required| 
+| image |  file |  required  |  
+
+
+---
+
+| Error Code  |      Description  |    
+|----------|:-------------:|
+| MISSINGFIELDS | all fields are required| 
+| WRONGFORMAT |    Wrong image format, must be in jpg, jpeg, png  |  
+
+
+## Get all Gifs 
+
+GET ```/api/gifs```
+
+| Parameters   | Type |     Conditions  |    
+|----------|:-------------:| ----: |
+| page | query |required| 
+
+
+
+
+## Delete Gif 
+
+DELETE ```/api/gifs/:id```
+
+| Parameters   | Type |     Conditions  |    
+|----------|:-------------:| ----: |
+| id | params | required | 
+
+
+## Create Comment
+
+POST ```/api/comments```
+
+| Parameters   | Type |     Conditions  |    
+|----------|:-------------:| ----: |
+| content | body | required| 
+
+
+
+---
+
+| Error Code  |      Description  |    
+|----------|:-------------:|
+| EMPTYCONTENT | all fields are required| 
+| WRONGFORMAT |    Wrong image format, must be in jpg, jpeg, png  |  

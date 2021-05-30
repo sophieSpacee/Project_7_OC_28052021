@@ -25,8 +25,24 @@ db.comments = require("./comment.model.js")(sequelize, Sequelize);
 
 db.gifs.hasMany(db.comments, {as: "comments"});
 db.comments.belongsTo(db.gifs, {
-    foreignKey: "GifId", 
-    as: "gif",
+  foreignKey: 'GifId',
+  as: 'gif',
+  onDelete: 'CASCADE',
 });
+
+db.users.hasMany(db.gifs, {as: "gifs"});
+db.gifs.belongsTo(db.users, {
+  foreignKey: 'UserId',
+  as: 'author',
+  onDelete: 'CASCADE',
+});
+
+db.users.hasMany(db.comments, {as: "comments"});
+db.comments.belongsTo(db.users, {
+  foreignKey: 'UserId',
+  as: 'author',
+  onDelete: 'CASCADE',
+});
+
 
 module.exports = db;
