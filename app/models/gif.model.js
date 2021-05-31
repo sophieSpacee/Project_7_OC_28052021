@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
           },
+          usersLiked: {
+            type: Sequelize.JSON,
+            allowNull: false
+          }
         
     });
   

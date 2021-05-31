@@ -5,13 +5,13 @@ module.exports = app => {
   
     const router = require("express").Router();
   
-    router.post("/", auth, multer, gifs.create);
+    router.post("/",  multer, gifs.create);
   
-    router.get("/", auth, gifs.findAll);
+    router.get("/",  gifs.findAll);
 
-    router.post("/:id/like", auth, gifs.like);
+    router.post("/:id/like",  gifs.like);
   
-    router.delete("/:id", auth, multer, gifs.delete);
+    router.delete("/:id",  multer, gifs.delete);
   
     app.use('/api/gifs', router);
   };

@@ -4,9 +4,9 @@ module.exports = app => {
     
     var router = require("express").Router();
   
-    router.post("/", auth, comments.create);
+    router.post("/",  comments.create);
   
-    router.delete("/:id", auth, comments.delete);
+    router.delete("/:id",  comments.delete);
 
     app.use('/api/gifs/:id/comments', router);
   };

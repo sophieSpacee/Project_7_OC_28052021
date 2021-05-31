@@ -35,6 +35,7 @@ exports.create = (req, res) => {
     }`,
     UserId: req.body.userId,
     likes: 0,
+    usersLiked: { usersId: [] },
   };
 
   Gif.create(gif)
@@ -78,18 +79,28 @@ exports.findAll = (req, res) => {
 };
 
 exports.like = (req, res) => {
-  console.log("dans le controller like")
+  console.log("dans le controller like");
   const id = req.params.id;
   Gif.findByPk(id)
     .then((gif) => {
-      console.log("dans le premier then")
+      console.log("dans le premier then");
       const userId = req.body.userId;
       const like = req.body.like;
-      if (like == 0) {
-        gif.likes = gif.likes -1;
-        Gif.update({likes: gif.likes}, {
-          where: { id: id },
-        })
+      console.log(gif.usersLiked.usersId)
+      const userIdInUsersLiked = gif.usersLiked.usersId.includes(userId);
+      console.log(userIdInUsersLiked);
+      if (like == 1 && userIdInUsersLiked) {
+        console.log("in like = 0")
+        gif.likes = gif.likes - 1;
+        const indexOfUserIdLiked = gif.usersLiked.usersId.indexOf(userId);
+        gif.usersLiked.usersId.splice(indexOfUserIdLiked, 1);
+        Gif.update(
+          { likes: gif.likes, usersLiked: gif.usersLiked },
+         
+          {
+            where: { id: id },
+          }
+        )
           .then((num) => {
             if (num == 1) {
               Gif.findByPk(id)
@@ -119,11 +130,18 @@ exports.like = (req, res) => {
             });
           });
       }
-      if (like == 1) {
+      if (like == 1 && !userIdInUsersLiked) {
+        console.log("in like = 1")
         gif.likes = gif.likes + 1;
-        Gif.update({likes: gif.likes}, {
-          where: { id: id },
-        })
+        console.log("gif.likes", gif.likes)
+        console.log("gif.usersLiked.userId", gif.usersLiked.usersId)
+        gif.usersLiked.usersId.push(userId);
+        Gif.update(
+          { likes: gif.likes, usersLiked: gif.usersLiked },
+          {
+            where: { id: id },
+          }
+        )
           .then((num) => {
             if (num == 1) {
               Gif.findByPk(id)
@@ -140,7 +158,7 @@ exports.like = (req, res) => {
                   });
                 });
             } else {
-              console.log(num)
+              console.log(num);
               res.send({
                 message: `Cannot update Gif with id=${id}. Maybe Gif was not found or gif is empty!`,
                 code: "UPDATEFAILED",
