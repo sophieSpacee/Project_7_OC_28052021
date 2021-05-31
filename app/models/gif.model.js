@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(300),
             allowNull: false,
           },
+          likes: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+          },
         
     });
   

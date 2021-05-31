@@ -2,7 +2,8 @@ const db = require("../models");
 const Gif = db.gifs;
 const Comment = db.comments;
 const Op = db.Sequelize.Op;
-const fs = require('fs')
+const fs = require("fs");
+const { NONAME } = require("dns");
 
 exports.create = (req, res) => {
   if (!req.body.title || !req.file) {
@@ -32,7 +33,8 @@ exports.create = (req, res) => {
     image: `${req.protocol}://${req.get("host")}/app/images/${
       req.file.filename
     }`,
-    UserId: req.body.userId
+    UserId: req.body.userId,
+    likes: 0,
   };
 
   Gif.create(gif)
@@ -46,24 +48,26 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findAll= (req, res) => {
+exports.findAll = (req, res) => {
   let page = parseInt(req.query.page) || 0;
   let limit = 2;
   Gif.findAndCountAll({
-    include: [{
-      model: Comment, as: 'comments',
-    }],
+    include: [
+      {
+        model: Comment,
+        as: "comments",
+      },
+    ],
     limit: limit,
     order: [["updatedAt", "DESC"]],
-    offset: page * limit
+    offset: page * limit,
   })
     .then((data) => {
-      
       res.send({
         gifs: data.rows,
-        total_pages: Math.ceil(data.count/limit),
+        total_pages: Math.ceil(data.count / limit),
         per_page: limit,
-        current_page: page
+        current_page: page,
       });
     })
     .catch((err) => {
@@ -73,12 +77,97 @@ exports.findAll= (req, res) => {
     });
 };
 
+exports.like = (req, res) => {
+  console.log("dans le controller like")
+  const id = req.params.id;
+  Gif.findByPk(id)
+    .then((gif) => {
+      console.log("dans le premier then")
+      const userId = req.body.userId;
+      const like = req.body.like;
+      if (like == 0) {
+        gif.likes = gif.likes -1;
+        Gif.update({likes: gif.likes}, {
+          where: { id: id },
+        })
+          .then((num) => {
+            if (num == 1) {
+              Gif.findByPk(id)
+                .then((data) => {
+                  res.send({
+                    gif: data,
+                    message: "Gif liked",
+                  });
+                })
+                .catch((err) => {
+                  res.status(500).send({
+                    message: "Error retrieving gif with id=" + id,
+                    code: "UPDATEFAILED",
+                  });
+                });
+            } else {
+              res.send({
+                message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`,
+                code: "UPDATEFAILED",
+              });
+            }
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: "Error updating User with id=" + id,
+              code: "UPDATEFAILED",
+            });
+          });
+      }
+      if (like == 1) {
+        gif.likes = gif.likes + 1;
+        Gif.update({likes: gif.likes}, {
+          where: { id: id },
+        })
+          .then((num) => {
+            if (num == 1) {
+              Gif.findByPk(id)
+                .then((data) => {
+                  res.send({
+                    gif: data,
+                    message: "Gif liked",
+                  });
+                })
+                .catch((err) => {
+                  res.status(500).send({
+                    message: "Error retrieving gif with id=" + id,
+                    code: "UPDATEFAILED",
+                  });
+                });
+            } else {
+              console.log(num)
+              res.send({
+                message: `Cannot update Gif with id=${id}. Maybe Gif was not found or gif is empty!`,
+                code: "UPDATEFAILED",
+              });
+            }
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: "Error updating Gif with id=" + id,
+              code: "UPDATEFAILED",
+            });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Gif with id=" + id,
+        code: "UPDATEFAILED",
+      });
+    });
+};
 
 exports.delete = (req, res) => {
   const id = req.params.id;
   Gif.findByPk(id)
-  .then((gif) => {
-    const filename = gif.image.split("/images/")[1];
+    .then((gif) => {
+      const filename = gif.image.split("/images/")[1];
       fs.unlink(`app/images/${filename}`, () => {
         Gif.destroy({
           where: { id: id },
@@ -100,11 +189,10 @@ exports.delete = (req, res) => {
             });
           });
       });
-  })
-  .catch((err) => {
-    res.status(404).send({
-      message:  "Gif not found",
+    })
+    .catch((err) => {
+      res.status(404).send({
+        message: "Gif not found",
+      });
     });
-  })
-  
 };

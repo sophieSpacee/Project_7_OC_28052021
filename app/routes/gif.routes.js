@@ -8,6 +8,8 @@ module.exports = app => {
     router.post("/", auth, multer, gifs.create);
   
     router.get("/", auth, gifs.findAll);
+
+    router.post("/:id/like", auth, gifs.like);
   
     router.delete("/:id", auth, multer, gifs.delete);
   

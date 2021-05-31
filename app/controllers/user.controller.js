@@ -118,7 +118,6 @@ exports.login = (req, res) => {
 
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
   User.findByPk(id)
     .then((data) => {
       res.send(data);
@@ -133,11 +132,11 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
   const id = req.params.id;
-
   User.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
+      console.log(req.body)
       if (num == 1) {
         User.findByPk(id)
           .then((data) => {
@@ -169,7 +168,6 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-
   User.destroy({
     where: { id: id },
   })
