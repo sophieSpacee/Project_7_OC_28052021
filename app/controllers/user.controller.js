@@ -13,6 +13,7 @@ function encodeBase64(email) {
 }
 
 exports.create = (req, res) => {
+  console.log(req.body)
   if (
     !req.body.email ||
     !req.body.first_name ||
