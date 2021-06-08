@@ -169,6 +169,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
+  console.log("id", id)
   User.destroy({
     where: { id: id },
   })

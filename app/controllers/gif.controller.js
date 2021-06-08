@@ -1,12 +1,13 @@
 const db = require("../models");
 const Gif = db.gifs;
 const Comment = db.comments;
+const User = db.users;
 const Op = db.Sequelize.Op;
 const fs = require("fs");
 const { NONAME } = require("dns");
 
 exports.create = (req, res) => {
-  if (!req.body.title || !req.file) {
+  if (!req.body.title || !req.file || !req.body.userId) {
     res.status(400).send({
       message: "All fields are required",
       code: "MISSINGFIELDS",
@@ -51,13 +52,23 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   let page = parseInt(req.query.page) || 0;
-  let limit = 2;
+  let limit = 10;
   Gif.findAndCountAll({
     include: [
       {
         model: Comment,
         as: "comments",
+        include: [
+          {
+            model: User,
+            as: "author",
+          }
+        ],
       },
+      {
+        model: User,
+        as: "author"
+      }
     ],
     limit: limit,
     order: [["updatedAt", "DESC"]],

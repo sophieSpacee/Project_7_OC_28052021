@@ -3,7 +3,7 @@ const Comment = db.comments;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.content) {
+    if (!req.body.content || !req.body.userId || !req.body.gifId) {
       res.status(400).send({
         message: "Content can not be empty!",
         code: "EMPTYCONTENT"
@@ -12,13 +12,14 @@ exports.create = (req, res) => {
     }
     const comment = {
       content: req.body.content,
-      GifId: req.params.id,
+      GifId: req.body.gifId,
       UserId: req.body.userId
     };
 
     Comment.create(comment)
       .then(data => {
         res.send(data);
+        console.log(data)
       })
       .catch(err => {
         res.status(500).send({
