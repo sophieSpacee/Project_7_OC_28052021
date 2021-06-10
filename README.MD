@@ -2,14 +2,27 @@
 
 ## Launch Groupomania application
 
-To launch this application, clone this repository : https://github.com/sophieSpacee/SophieGauthier_7_28052021.git
-With your terminal, go to Sophie_Gauthier_7_front folder 
-Write "git submodule update --init"
-Write "npm install"
-Write "npm start"
-Go to Sophie_Gauthier_7_280521 folder
-Write "npm install"
-Write "nodemon"
+1. Clone this repository : https://github.com/sophieSpacee/SophieGauthier_7_28052021.git
+2. With your terminal, go to Sophie_Gauthier_7_front folder 
+3. Write "git submodule update --init"
+4. Write "npm install"
+5. Write "npm start"
+6. In a new terminal window, Go to Sophie_Gauthier_7_280521 folder
+8. Write "npm install"
+9. Write "nodemon"
+10. In the root of Sophie_Gauthier_7_280521, create a .env file <br/>
+
+Follow this model : <br/>
+DB_User="root"<br/>
+DB_Password="your password"<br/>
+DB_AdminEmail="admin@groupomania.com"<br/>
+DB_AdminPassword="groupomania"<br/>
+
+DB_User and DB_Password allow your application to connect to your local database <br/>
+DB_AdminEmail and DB_AdminPassword will allow you to access the admin panel at this address : http://localhost:3001/admin/
+
+
+Your application is now running on http://localhost:3000
 
 ## Create User
 

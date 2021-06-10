@@ -1,8 +1,8 @@
 const { buildAuthenticatedRouter} = require('admin-bro-expressjs');
 
 const ADMIN = {
-    email: 'admin@groupomania.com',
-    password: 'adminPassword123',
+    email: process.env.DB_AdminEmail,
+    password: process.env.DB_AdminPassword,
     }
 
 const buildAdminRouter = (admin) => {
