@@ -1,13 +1,12 @@
 const express = require("express");
-// const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 const AdminBro = require('admin-bro');
 const options = require('./app/admin.options');
 const buildAdminRouter = require('./app/admin.router');
-const Sequelize = require('sequelize')
-const adminBroSequelize = require('@admin-bro/Sequelize');
+// const Sequelize = require('sequelize')
+// const adminBroSequelize = require('@admin-bro/Sequelize');
 
 
 
@@ -19,12 +18,6 @@ app.use(admin.options.rootPath, router);
 // db.sequelize.sync({ force: true }).then(() => {
 //     console.log("Drop and re-sync db.");
 //   });
-
-
-
-// var corsOptions = {
-//   origin: "http://localhost:3001" 
-// };
 
 
 app.use((req, res, next) => {
@@ -40,11 +33,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// parse requests of content-type - application/json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+//permet d'afficher les images sur le feed
+app.use('/app/images', express.static('app/images'))
 
 require("./app/routes/user.routes")(app);
 require("./app/routes/gif.routes")(app);

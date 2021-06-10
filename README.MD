@@ -1,3 +1,16 @@
+# Groupomania
+
+## Launch Groupomania application
+
+To launch this application, clone this repository : https://github.com/sophieSpacee/SophieGauthier_7_28052021.git
+With your terminal, go to Sophie_Gauthier_7_front folder 
+Write "git submodule update --init"
+Write "npm install"
+Write "npm start"
+Go to Sophie_Gauthier_7_280521 folder
+Write "npm install"
+Write "nodemon"
+
 ## Create User
 
 POST ```/api/users```

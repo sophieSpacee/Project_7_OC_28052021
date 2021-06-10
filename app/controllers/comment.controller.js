@@ -1,6 +1,8 @@
 const db = require("../models");
 const Comment = db.comments;
 const Op = db.Sequelize.Op;
+const Gif = db.gifs;
+const User = db.users;
 
 exports.create = (req, res) => {
     if (!req.body.content || !req.body.userId || !req.body.gifId) {
@@ -18,8 +20,34 @@ exports.create = (req, res) => {
 
     Comment.create(comment)
       .then(data => {
-        res.send(data);
-        console.log(data)
+        Gif.findByPk(req.body.gifId, {include: [
+          {
+            model: Comment,
+            as: "comments",
+            include: [
+              {
+                model: User,
+                as: "author",
+              }
+            ],
+          },
+          {
+            model: User,
+            as: "author"
+          }
+        ],})
+        .then((data) => {
+          res.send({
+            gif: data,
+            message: "Gif commented",
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: "Error retrieving gif with id=" + id,
+            code: "UPDATEFAILED",
+          });
+        });
       })
       .catch(err => {
         res.status(500).send({

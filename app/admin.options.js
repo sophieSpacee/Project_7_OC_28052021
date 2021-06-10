@@ -5,6 +5,7 @@ AdminBro.registerAdapter(adminBroSequelize);
 const db = require("./models");
 const  options = {
     databases: [db],
+    rootpath: "/admin"
 };
 
 module.exports = options;

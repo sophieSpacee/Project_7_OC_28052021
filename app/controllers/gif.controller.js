@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     "image/jpg": "jpg",
     "image/jpeg": "jpg",
     "image/png": "png",
+    "image/gif": 'gif',
   };
   const extension = MIME_TYPES[req.file.mimetype];
   console.log(extension);
@@ -90,18 +91,30 @@ exports.findAll = (req, res) => {
 };
 
 exports.like = (req, res) => {
-  console.log("dans le controller like");
   const id = req.params.id;
-  Gif.findByPk(id)
+  Gif.findByPk(id, {include: [
+    {
+      model: Comment,
+      as: "comments",
+      include: [
+        {
+          model: User,
+          as: "author",
+        }
+      ],
+    },
+    {
+      model: User,
+      as: "author"
+    }
+  ],})
     .then((gif) => {
-      console.log("dans le premier then");
+      console.log(gif)
       const userId = req.body.userId;
       const like = req.body.like;
-      console.log(gif.usersLiked.usersId)
       const userIdInUsersLiked = gif.usersLiked.usersId.includes(userId);
-      console.log(userIdInUsersLiked);
+   
       if (like == 1 && userIdInUsersLiked) {
-        console.log("in like = 0")
         gif.likes = gif.likes - 1;
         const indexOfUserIdLiked = gif.usersLiked.usersId.indexOf(userId);
         gif.usersLiked.usersId.splice(indexOfUserIdLiked, 1);
@@ -114,7 +127,22 @@ exports.like = (req, res) => {
         )
           .then((num) => {
             if (num == 1) {
-              Gif.findByPk(id)
+              Gif.findByPk(id, {include: [
+                {
+                  model: Comment,
+                  as: "comments",
+                  include: [
+                    {
+                      model: User,
+                      as: "author",
+                    }
+                  ],
+                },
+                {
+                  model: User,
+                  as: "author"
+                }
+              ],})
                 .then((data) => {
                   res.send({
                     gif: data,
@@ -142,10 +170,7 @@ exports.like = (req, res) => {
           });
       }
       if (like == 1 && !userIdInUsersLiked) {
-        console.log("in like = 1")
         gif.likes = gif.likes + 1;
-        console.log("gif.likes", gif.likes)
-        console.log("gif.usersLiked.userId", gif.usersLiked.usersId)
         gif.usersLiked.usersId.push(userId);
         Gif.update(
           { likes: gif.likes, usersLiked: gif.usersLiked },
@@ -155,7 +180,22 @@ exports.like = (req, res) => {
         )
           .then((num) => {
             if (num == 1) {
-              Gif.findByPk(id)
+              Gif.findByPk(id, {include: [
+                {
+                  model: Comment,
+                  as: "comments",
+                  include: [
+                    {
+                      model: User,
+                      as: "author",
+                    }
+                  ],
+                },
+                {
+                  model: User,
+                  as: "author"
+                }
+              ],})
                 .then((data) => {
                   res.send({
                     gif: data,
