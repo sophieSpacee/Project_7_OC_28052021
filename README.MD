@@ -2,23 +2,40 @@
 
 ## Launch Groupomania application
 
-1. Clone this repository : https://github.com/sophieSpacee/SophieGauthier_7_28052021.git
+1. From your terminal, clone this repository : 
+`git clone https://github.com/sophieSpacee/SophieGauthier_7_28052021.git`
 2. With your terminal, go to Sophie_Gauthier_7_front folder 
-3. Write "git submodule update --init"
-4. Write "npm install"
-5. Write "npm start"
+`cd Sophie_Gauthier_7_280521/Sophie_Gauthier_7_front`
+3. Type `git submodule update --init`to clone the frontend repository
+4. Type `npm install`or `sudo npm install`
+5. Type `npm start`
+<br/>
+You now have the front end up and running, now for the backend : 
+<br/>
+
 6. In a new terminal window, Go to Sophie_Gauthier_7_280521 folder
-8. Write "npm install"
-9. Write "nodemon"
-10. In the root of Sophie_Gauthier_7_280521, create a .env file <br/>
+8. Type `npm install` or `sudo npm install`
+9. Install nodemon, `npm install nodemon` 
+10. Type `nodemon``
+
+<br/>
+
+You now have both frontend and backend running, now we need to set up the database
+<br/>
+
+11. In a third terminal, install Mysql (if you don't already have it installed), you can use this link https://dev.mysql.com/downloads/mysql/#downloads
+12. Type `mysql`and choose a username and password `mysql --host=localhost --user=root --password=motdepassetopsecret`
+13. Connect to mysql `mysql -h localhost -u root -p`
+14. Create a new Database called Groupomania `CREATE DATABASE groupomania;`
+11. In your editor, in the root of Sophie_Gauthier_7_280521, create a .env file <br/>
 
 Follow this model : <br/>
 DB_User="root"<br/>
-DB_Password="your password"<br/>
+DB_Password="your mysql root password"<br/>
 DB_AdminEmail="admin@groupomania.com"<br/>
 DB_AdminPassword="groupomania"<br/>
 
-DB_User and DB_Password allow your application to connect to your local database <br/>
+DB_User and DB_Password allow your application to connect to your local database, do not forget to change your username and password <br/>
 DB_AdminEmail and DB_AdminPassword will allow you to access the admin panel at this address : http://localhost:3001/admin/
 
 
