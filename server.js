@@ -5,16 +5,12 @@ const app = express();
 const AdminBro = require('admin-bro');
 const options = require('./app/admin.options');
 const buildAdminRouter = require('./app/admin.router');
-// const Sequelize = require('sequelize')
-// const adminBroSequelize = require('@admin-bro/Sequelize');
-
-
-
+const db = require("./app/models");
 const admin = new AdminBro(options);
 const router = buildAdminRouter(admin);
 app.use(admin.options.rootPath, router);
 
-const db = require("./app/models");
+
 db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
   });
