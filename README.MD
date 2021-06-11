@@ -27,7 +27,8 @@ You now have both frontend and backend running, now we need to set up the databa
 12. Type `mysql`and choose a username and password `mysql --host=localhost --user=root --password=motdepassetopsecret`
 13. Connect to mysql `mysql -h localhost -u root -p`
 14. Create a new Database called Groupomania `CREATE DATABASE groupomania;`
-11. In your editor, in the root of Sophie_Gauthier_7_280521, create a .env file <br/>
+15. Type `USE groupomania;`
+16. In your editor, in the root of Sophie_Gauthier_7_280521, create a .env file <br/>
 
 Follow this model : <br/>
 DB_User="root"<br/>
