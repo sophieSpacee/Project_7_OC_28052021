@@ -4,8 +4,8 @@
 
 1. From your terminal, clone this repository : 
 `git clone https://github.com/sophieSpacee/SophieGauthier_7_28052021.git`
-2. With your terminal, go to Sophie_Gauthier_7_front folder 
-`cd Sophie_Gauthier_7_280521/Sophie_Gauthier_7_front`
+2. With your terminal, go to SophieGauthier_7_front folder 
+`cd SophieGauthier_7_280521/SophieGauthier_7_front`
 3. Type `git submodule update --init`to clone the frontend repository
 4. Type `npm install`or `sudo npm install`
 5. Type `npm start`
@@ -16,11 +16,10 @@ You now have the front end up and running, now for the backend :
 6. In a new terminal window, Go to Sophie_Gauthier_7_280521 folder
 8. Type `npm install` or `sudo npm install`
 9. Install nodemon, `npm install nodemon` 
-10. Type `nodemon`
-
+10. Close this terminal window, you will not need it anymore
 <br/>
 
-You now have both frontend and backend running, now we need to set up the database
+You are almost ready, now we need to set up the database
 <br/>
 
 11. In a third terminal, install Mysql (if you don't already have it installed), you can use this link https://dev.mysql.com/downloads/mysql/#downloads
@@ -39,6 +38,8 @@ DB_AdminPassword="groupomania"<br/>
 DB_User and DB_Password allow your application to connect to your local database, do not forget to change your username and password <br/>
 DB_AdminEmail and DB_AdminPassword will allow you to access the admin panel at this address : http://localhost:3001/admin/
 
+17. Save your .env file 
+18. Open a terminal in your editor and Type `nodemon server.js`
 
 Your application is now running on http://localhost:3000
 
@@ -121,8 +122,6 @@ GET ```/api/gifs```
 | Parameters   | Type |     Conditions  |    
 |----------|:-------------:| ----: |
 | page | query |required| 
-
-
 
 
 ## Delete Gif 
