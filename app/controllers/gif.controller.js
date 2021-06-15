@@ -2,10 +2,9 @@ const db = require("../models");
 const Gif = db.gifs;
 const Comment = db.comments;
 const User = db.users;
-const Op = db.Sequelize.Op;
 const fs = require("fs");
-const { NONAME } = require("dns");
 
+// Create a gif
 exports.create = (req, res) => {
   if (!req.body.title || !req.file || !req.body.userId) {
     res.status(400).send({
@@ -18,10 +17,9 @@ exports.create = (req, res) => {
     "image/jpg": "jpg",
     "image/jpeg": "jpg",
     "image/png": "png",
-    "image/gif": 'gif',
+    "image/gif": "gif",
   };
   const extension = MIME_TYPES[req.file.mimetype];
-  console.log(extension);
   if (extension == undefined) {
     res.status(400).send({
       message: "Wrong image format, must be in jpg, jpeg, png",
@@ -29,7 +27,6 @@ exports.create = (req, res) => {
     });
     return;
   }
-
   const gif = {
     title: req.body.title,
     image: `${req.protocol}://${req.get("host")}/app/images/${
@@ -39,7 +36,6 @@ exports.create = (req, res) => {
     likes: 0,
     usersLiked: { usersId: [] },
   };
-
   Gif.create(gif)
     .then((data) => {
       res.send(data);
@@ -51,6 +47,7 @@ exports.create = (req, res) => {
     });
 };
 
+// Show all gifs
 exports.findAll = (req, res) => {
   let page = parseInt(req.query.page) || 0;
   let limit = 10;
@@ -63,13 +60,13 @@ exports.findAll = (req, res) => {
           {
             model: User,
             as: "author",
-          }
+          },
         ],
       },
       {
         model: User,
-        as: "author"
-      }
+        as: "author",
+      },
     ],
     limit: limit,
     order: [["updatedAt", "DESC"]],
@@ -90,59 +87,62 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Like a gif
 exports.like = (req, res) => {
   const id = req.params.id;
-  Gif.findByPk(id, {include: [
-    {
-      model: Comment,
-      as: "comments",
-      include: [
-        {
-          model: User,
-          as: "author",
-        }
-      ],
-    },
-    {
-      model: User,
-      as: "author"
-    }
-  ],})
+  Gif.findByPk(id, {
+    include: [
+      {
+        model: Comment,
+        as: "comments",
+        include: [
+          {
+            model: User,
+            as: "author",
+          },
+        ],
+      },
+      {
+        model: User,
+        as: "author",
+      },
+    ],
+  })
     .then((gif) => {
-      console.log(gif)
       const userId = req.body.userId;
       const like = req.body.like;
       const userIdInUsersLiked = gif.usersLiked.usersId.includes(userId);
-   
       if (like == 1 && userIdInUsersLiked) {
         gif.likes = gif.likes - 1;
         const indexOfUserIdLiked = gif.usersLiked.usersId.indexOf(userId);
         gif.usersLiked.usersId.splice(indexOfUserIdLiked, 1);
         Gif.update(
           { likes: gif.likes, usersLiked: gif.usersLiked },
-         
+
           {
             where: { id: id },
           }
         )
           .then((num) => {
             if (num == 1) {
-              Gif.findByPk(id, {include: [
-                {
-                  model: Comment,
-                  as: "comments",
-                  include: [
-                    {
-                      model: User,
-                      as: "author",
-                    }
-                  ],
-                },
-                {
-                  model: User,
-                  as: "author"
-                }
-              ],})
+              Gif.findByPk(id, {
+                include: [
+                  {
+                    model: Comment,
+                    as: "comments",
+                    include: [
+                      {
+                        model: User,
+                        as: "author",
+                      },
+                    ],
+                  },
+                  {
+                    model: User,
+                    as: "author",
+                  },
+                ],
+              })
                 .then((data) => {
                   res.send({
                     gif: data,
@@ -180,22 +180,24 @@ exports.like = (req, res) => {
         )
           .then((num) => {
             if (num == 1) {
-              Gif.findByPk(id, {include: [
-                {
-                  model: Comment,
-                  as: "comments",
-                  include: [
-                    {
-                      model: User,
-                      as: "author",
-                    }
-                  ],
-                },
-                {
-                  model: User,
-                  as: "author"
-                }
-              ],})
+              Gif.findByPk(id, {
+                include: [
+                  {
+                    model: Comment,
+                    as: "comments",
+                    include: [
+                      {
+                        model: User,
+                        as: "author",
+                      },
+                    ],
+                  },
+                  {
+                    model: User,
+                    as: "author",
+                  },
+                ],
+              })
                 .then((data) => {
                   res.send({
                     gif: data,
@@ -209,7 +211,6 @@ exports.like = (req, res) => {
                   });
                 });
             } else {
-              console.log(num);
               res.send({
                 message: `Cannot update Gif with id=${id}. Maybe Gif was not found or gif is empty!`,
                 code: "UPDATEFAILED",
@@ -232,6 +233,7 @@ exports.like = (req, res) => {
     });
 };
 
+//Delete gif
 exports.delete = (req, res) => {
   const id = req.params.id;
   Gif.findByPk(id)
