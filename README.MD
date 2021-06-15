@@ -5,7 +5,7 @@
 1. From your terminal, clone this repository : 
 `git clone https://github.com/sophieSpacee/SophieGauthier_7_28052021.git`
 2. With your terminal, go to SophieGauthier_7_front folder 
-`cd SophieGauthier_7_280521/SophieGauthier_7_front`
+`cd SophieGauthier_7_280521` and then `cd SophieGauthier_7_front`
 3. Type `git submodule update --init`to clone the frontend repository
 4. Type `npm install`or `sudo npm install`
 5. Type `npm start`
