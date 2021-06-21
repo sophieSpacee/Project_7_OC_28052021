@@ -7,7 +7,7 @@
 2. With your terminal, go to Front folder
    `cd SophieGauthier_7_28052021/` and then `cd Front/`
 3. Type `git submodule update --init`to clone the frontend repository
-4. Type `npm install`or `sudo npm install`
+4. Type `npm install` or `sudo npm install`
 5. Type `npm start`
    <br/>
    You now have the front end up and running, now for the backend :
