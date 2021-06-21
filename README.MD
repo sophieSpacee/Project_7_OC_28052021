@@ -13,7 +13,7 @@
 You now have the front end up and running, now for the backend : 
 <br/>
 
-6. In a new terminal window, Go to Sophie_Gauthier_7_280521 folder
+6. In a new terminal window, Go to SophieGauthier_7_280521 folder
 8. Type `npm install` or `sudo npm install`
 9. Install nodemon, `npm install nodemon` 
 10. Close this terminal window, you will not need it anymore
