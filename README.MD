@@ -50,11 +50,27 @@ Your application is now running on http://localhost:3000
 
 ## Project walkthrough
 
-For this project, I created a signup page as well as a login page. I encrypted email in base64 and I hashed password with bcrypt before sending user information into the database. 
-
-![alt text](./app/images/signup?raw=true)
+For this project, I created a signup page as well as a login page. 
+I encrypted email in base64 and I hashed password with bcrypt before sending user information into the database. 
 
 ![Signup](/app/images/signup.png)
+
+Once connected, a user can post a gif or an image, like gifs others posted or comment them. 
+
+![Feed](/app/images/feed.png)
+
+A user can choose to change his profile information on the user page. 
+
+![User](/app/images/user.png)
+
+I used AdminBro to have a control panel of my database. From there, the website administrator can delete or modify a post, a comment and delete a user if necessary. 
+
+![admin-dash](/app/images/admin-dash.png)
+
+Of course, AdminBro's access is secure, the website administrator will need to set up an email and password to connect to the admin panel. 
+
+![admin-log](/app/images/admin-log.png)
+
 
 
 
