@@ -54,6 +54,9 @@ For this project, I created a signup page as well as a login page. I encrypted e
 
 ![alt text](/images/signup?raw=true)
 
+![Signup](./images/logo.png)
+
+
 
 
 ## Create User
