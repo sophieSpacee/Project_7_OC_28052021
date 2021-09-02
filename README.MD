@@ -48,6 +48,14 @@ DB_AdminEmail and DB_AdminPassword will allow you to access the admin panel at t
 
 Your application is now running on http://localhost:3000
 
+## Project walkthrough
+
+For this project, I created a signup page as well as a login page. I encrypted email in base64 and I hashed password with bcrypt before sending user information into the database. 
+
+![alt text](https://github.com/sophieSpacee/Projet_7_OC_28052021/Front/src/assets/bin.png?raw=true)
+
+
+
 ## Create User
 
 POST `/api/users`
