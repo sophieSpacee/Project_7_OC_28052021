@@ -54,7 +54,7 @@ For this project, I created a signup page as well as a login page. I encrypted e
 
 ![alt text](./app/images/signup?raw=true)
 
-![Signup](/app/images/logo.png)
+![Signup](/app/images/signup.png)
 
 
 
