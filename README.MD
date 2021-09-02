@@ -1,4 +1,9 @@
-# Groupomania
+# Groupomania - Projet 7 of Web Developper course with OpenClassrooms
+
+## Project Goals 
+
+This project is the last project of my course to become a full stack developer. The goal was to create from scratch a social media for a company. To code this project, I used ReactJS, Sass and Bootstrap for my frontend and NodeJS, Express, MySQL and Sequelize for my backend. 
+I was not provided any specifications or mock up, I just had to develop a social media with a feature that allowed people to share images and gifs (like 9GAG). I worked on a mockup using Figma, tested my APIs using Postman and learned to use ReactJS to develop my application. 
 
 ## Launch Groupomania application
 
