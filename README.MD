@@ -52,9 +52,9 @@ Your application is now running on http://localhost:3000
 
 For this project, I created a signup page as well as a login page. I encrypted email in base64 and I hashed password with bcrypt before sending user information into the database. 
 
-![alt text](/app/images/signup?raw=true)
+![alt text](./app/images/signup?raw=true)
 
-![Signup](./app/images/logo.png)
+![Signup](/app/images/logo.png)
 
 
 
