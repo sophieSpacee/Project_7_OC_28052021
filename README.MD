@@ -2,26 +2,36 @@
 
 ## Project Goals 
 
-This project is the last project of my course to become a full stack developer. The goal was to create from scratch a social media for a company. To code this project, I used ReactJS, Sass and Bootstrap for my frontend and NodeJS, Express, MySQL and Sequelize for my backend. 
+This project is the last project of my course to become a full stack developer. The goal was to create from scratch a social media for a company. //
+To code this project, I used ReactJS, Sass and Bootstrap for my frontend and NodeJS, Express, MySQL and Sequelize for my backend. //
+//
 I was not provided any specifications or mock up, I just had to develop a social media with a feature that allowed people to share images and gifs (like 9GAG). I worked on a mockup using Figma, tested my APIs using Postman and learned to use ReactJS to develop my application. 
 
 
 ## Project walkthrough
 
-For this project, I created a signup page as well as a login page. 
+For this project, I created a signup page as well as a login page. //
 I encrypted email in base64 and I hashed password with bcrypt before sending user information into the database. 
 
 ![Signup](/app/images/signup.png)
 
-Once connected, a user can post a gif or an image, like gifs others posted or comment them. 
+* Once connected, a user can post a gif or an image, like gifs others posted or comment them. 
+* A user can decide to delete a post he made, of course he cannot delete another person's post. Once a post is deleted, the image is automatically deleted from the database to avoid useless space loss. 
+* Image/Gif size is limited so that it does not affect website's performances. 
+* A user can only like an image once, he can also stop liking it. 
 
 ![Feed](/app/images/feed.png)
 
-A user can choose to change his profile information on the user page. 
+* A user can choose to change his profile information on the user page. 
+* He can also delete his profile. 
+* A user can logout from the application. 
 
 ![User](/app/images/user.png)
 
-I used AdminBro to have a control panel of my database. From there, the website administrator can delete or modify a post, a comment and delete a user if necessary. 
+I used AdminBro to have a control panel of my database. From there, the website administrator can: 
+* delete or modify a post,
+* view, delete or modigy a comment,
+* delete a user 
 
 ![admin-dash](/app/images/admin-dash.png)
 
